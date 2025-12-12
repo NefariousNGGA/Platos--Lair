@@ -25,7 +25,7 @@
     "react-dom": "^18.2.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
-    "remark-prism": "^2.0.0",
+    "remark-prismjs": "^2.0.0",
     "rss": "^1.2.2",
     "sanitize-html": "^2.12.1",
     "sharp": "^0.33.3",
