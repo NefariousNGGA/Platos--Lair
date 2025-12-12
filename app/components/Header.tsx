@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Search, Menu, X } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import SearchModal from './SearchModal'
-import { cn } from '../../lib/utils'
+import { cn } from '../lib/utils'
 
 const navItems = [
   { name: 'The Lair', href: '/' },
