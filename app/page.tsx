@@ -1,4 +1,4 @@
-import { prisma } from '../lib/prisma'
+import { prisma } from './lib/prisma'
 import PostCard from '@/app/components/PostCard'
 import StatsPreview from '@/app/components/StatsPreview'
 
