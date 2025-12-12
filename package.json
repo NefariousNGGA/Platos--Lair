@@ -23,6 +23,7 @@
     "next": "14.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "lucide-react": "^0.309.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "remark-rehype": "^10.1.0",
