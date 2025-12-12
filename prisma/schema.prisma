@@ -23,12 +23,12 @@ model Post {
   updatedAt     DateTime   @updatedAt
   readingTime   Int        @default(5)
   wordCount     Int        @default(0)
-  views         Int        @default(0)
+  views         Int        @default(0)  // Scalar field for counting views
   
   // Relations
   tags          PostTag[]
   reactions     Reaction[]
-  views         View[]
+  viewRecords   View[]      // Relation to the View model, renamed to avoid conflict
 
   @@index([slug])
   @@index([published, publishedAt])
