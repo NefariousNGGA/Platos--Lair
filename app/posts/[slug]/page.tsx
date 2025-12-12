@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { prisma } from '../../../lib/prisma'
+import { prisma } from '../../lib/prisma'
 import { format } from 'date-fns'
 import { Calendar, Clock, Tag } from 'lucide-react'
 import { marked } from 'marked'
