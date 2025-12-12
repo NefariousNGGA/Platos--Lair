@@ -28,6 +28,7 @@ model Post {
   // Relations
   tags          PostTag[]
   reactions     Reaction[]
+  views         View[]
 
   @@index([slug])
   @@index([published, publishedAt])
@@ -58,8 +59,8 @@ model PostTag {
   id        String   @id @default(cuid())
   postId    String
   tagId     String
-  post      Post     @relation(fields: [postId], references: [id], onDelete: CASCADE)
-  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: CASCADE)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
   assignedAt DateTime @default(now())
 
   @@unique([postId, tagId])
@@ -76,7 +77,7 @@ model Reaction {
   userHash  String   // Anonymous user identifier (IP hash)
   userAgent String?
   createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id], onDelete: CASCADE)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([postId, userHash, type])
   @@index([postId])
@@ -94,7 +95,7 @@ model View {
   country   String?
   city      String?
   createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id], onDelete: CASCADE)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
   @@index([createdAt])
