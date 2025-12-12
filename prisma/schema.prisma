@@ -1,0 +1,102 @@
+// This is your Prisma schema file for the blog platform
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL")
+}
+
+model Post {
+  id            String     @id @default(cuid())
+  slug          String     @unique
+  title         String
+  excerpt       String?
+  content       String?
+  coverImage    String?
+  published     Boolean    @default(false)
+  publishedAt   DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  readingTime   Int        @default(5)
+  wordCount     Int        @default(0)
+  views         Int        @default(0)
+  
+  // Relations
+  tags          PostTag[]
+  reactions     Reaction[]
+
+  @@index([slug])
+  @@index([published, publishedAt])
+  @@index([createdAt])
+  @@fulltext([title, excerpt, content])
+  @@map("posts")
+}
+
+model Tag {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  color       String?  @default("#6B7280")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  posts       PostTag[]
+
+  @@index([slug])
+  @@index([name])
+  @@map("tags")
+}
+
+// Many-to-many join table for Posts and Tags
+model PostTag {
+  id        String   @id @default(cuid())
+  postId    String
+  tagId     String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: CASCADE)
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: CASCADE)
+  assignedAt DateTime @default(now())
+
+  @@unique([postId, tagId])
+  @@index([postId])
+  @@index([tagId])
+  @@map("post_tags")
+}
+
+// For post reactions (likes, etc.)
+model Reaction {
+  id        String   @id @default(cuid())
+  postId    String
+  type      String   // 'like', 'love', 'clap', 'save'
+  userHash  String   // Anonymous user identifier (IP hash)
+  userAgent String?
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: CASCADE)
+
+  @@unique([postId, userHash, type])
+  @@index([postId])
+  @@index([createdAt])
+  @@map("reactions")
+}
+
+// For tracking page views (optional)
+model View {
+  id        String   @id @default(cuid())
+  postId    String
+  userHash  String
+  userAgent String?
+  ip        String?
+  country   String?
+  city      String?
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: CASCADE)
+
+  @@index([postId])
+  @@index([createdAt])
+  @@map("views")
+}
