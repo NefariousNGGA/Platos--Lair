@@ -33,7 +33,6 @@ model Post {
   @@index([slug])
   @@index([published, publishedAt])
   @@index([createdAt])
-  @@fulltext([title, excerpt, content])
   @@map("posts")
 }
 
